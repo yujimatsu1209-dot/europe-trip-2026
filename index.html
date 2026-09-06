@@ -17,6 +17,20 @@
 <section id="memo" class="panel"><div class="card"><div class="row between"><h2 class="sectionTitle">メモ</h2><button class="btn primary" onclick="openMemo()">＋追加</button></div><form id="memoForm" class="form"><input type="hidden" id="mId"><label>カテゴリ</label><select id="mCat"><option>行きたい場所</option><option>食べたい物</option><option>注意事項</option><option>買い物</option><option>自由メモ</option></select><label>タイトル</label><input id="mTitle" required><label>内容</label><textarea id="mBody" rows="5" required></textarea><label>URL</label><input id="mUrl" type="url"><div class="actions"><button class="btn primary">保存</button><button type="button" class="btn" onclick="closeForm('memoForm')">キャンセル</button></div></form><div id="memoList"></div></div></section>
 <section id="tools" class="panel"><div class="card"><h2 class="sectionTitle">旅行ツール</h2><div class="quick" style="margin-top:12px"><button onclick="window.open('https://www.google.com/maps','_blank')">🗺️<br>Google Maps</button><button onclick="window.open('https://translate.google.com','_blank')">🈯<br>翻訳</button><button onclick="window.open('https://www.google.com/search?q=EUR+JPY','_blank')">💱<br>EUR/JPY</button><button onclick="window.open('https://www.google.com/search?q=weather+Europe','_blank')">🌦️<br>天気検索</button></div></div><div class="card"><h2 class="sectionTitle">緊急・重要情報</h2><div class="muted" style="margin:8px 0">ここに保険会社・カード紛失窓口・親戚の連絡先などを自分で登録できます。パスワードやカード番号そのものは保存しないでください。</div><textarea id="emergency" rows="6" placeholder="例：海外旅行保険 連絡先…"></textarea><button class="btn primary" style="margin-top:8px" onclick="saveEmergency()">保存</button></div><div class="card"><h2 class="sectionTitle">データ管理</h2><p class="muted">このアプリの文字データをJSONでバックアップできます。添付画像は端末内のIndexedDB保存のため、このJSONには含まれません。</p><div class="actions"><button class="btn" onclick="showBackup()">バックアップ表示</button><button class="btn" onclick="document.getElementById('restoreBox').classList.toggle('open')">復元</button><button class="btn danger" onclick="resetAll()">全データ初期化</button></div><div id="backupOut" class="backup" style="display:none"></div><div id="restoreBox" class="form"><label>バックアップJSONを貼り付け</label><textarea id="restoreText" rows="6"></textarea><button class="btn primary" onclick="restoreAll()">復元実行</button></div></div><div class="card"><h2 class="sectionTitle">費用サマリー</h2><div id="costSummary"></div></div></section>
 </main><button class="fab" aria-label="追加" onclick="quickAdd()">＋</button>
+<div id="imgModal" class="imgModal" role="dialog" aria-modal="true" aria-label="チケット画像ビューア">
+  <div class="imgModalBox">
+    <img id="imgFull" alt="拡大したチケット画像">
+    <div class="zoomHint">2本指で拡大・縮小できます。ダブルタップ相当のダブルクリックでも拡大できます。</div>
+    <div class="imgActions">
+      <button type="button" onclick="resetZoom()">等倍に戻す</button>
+      <button type="button" onclick="replaceCurrentPhoto()">画像を差し替え</button>
+      <button type="button" class="danger" onclick="deleteCurrentPhoto()">画像を削除</button>
+      <button type="button" onclick="closeImage()">閉じる</button>
+    </div>
+  </div>
+</div>
+<input id="replacePhotoInput" type="file" accept="image/*" hidden>
+<div style="position:fixed;left:8px;bottom:5px;z-index:2;font-size:10px;color:#7b8493;background:#ffffffcc;padding:2px 5px;border-radius:6px">v4.0 save-fix</div>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],KEY='euro26PrivateV1';const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);const fmt=d=>d?new Date(d+'T00:00:00').toLocaleDateString('ja-JP',{month:'numeric',day:'numeric',weekday:'short'}):'日付未設定';
 const defaults={trips:[],books:[],checks:[],memos:[],emergency:''};

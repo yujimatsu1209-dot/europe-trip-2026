@@ -1,0 +1,14 @@
+{
+  "name": "欧州旅行2026",
+  "short_name": "欧州旅行",
+  "description": "端末内にデータを保存する個人用旅行管理PWA",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#edf4ff",
+  "icons": [
+    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
